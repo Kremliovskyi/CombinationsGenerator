@@ -13,12 +13,60 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <name>Test Combinations Generator</name>
+    <description>A test library to ease generating test input combinations</description>
+    <url>https://github.com/Kremliovskyi/CombinationsGenerator</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git://github.com/Kremliovskyi/CombinationsGenerator.git</connection>
+        <developerConnection>scm:git:ssh://github.com:Kremliovskyi/CombinationsGenerator.git</developerConnection>
+        <url>https://github.com/Kremliovskyi/CombinationsGenerator</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Andrii Kremlovskyi</name>
+            <email>kremliovskyi@hotmail.com</email>
+            <organization>com.github.kremlovskyi</organization>
+            <organizationUrl>https://github.com/Kremliovskyi/CombinationsGenerator</organizationUrl>
+        </developer>
+    </developers>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
