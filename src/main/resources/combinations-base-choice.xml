@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="combinations.xsd">
+    <parameter name="Manufacturer">
+        <value baseChoice="true">Apple</value>
+        <value>Asus</value>
+        <value>Acer</value>
+        <value>Dell</value>
+        <value>HP</value>
+        <value>Lenovo</value>
+        <value>MSI</value>
+    </parameter>
+
+    <parameter name="RAM">
+        <value>4</value>
+        <value baseChoice="true">8</value>
+        <value>16</value>
+        <value>32</value>
+        <value>64</value>
+    </parameter>
+
+    <parameter name="Screen">
+        <value baseChoice="true">13</value>
+        <value>14</value>
+        <value>15</value>
+    </parameter>
+
+    <parameter name="Processor">
+        <value>AMD Ryzen 3</value>
+        <value>AMD Ryzen 5</value>
+        <value>AMD Ryzen 7</value>
+        <value>Intel Core I3</value>
+        <value baseChoice="true">Intel Core I5</value>
+        <value>Intel Core I7</value>
+        <value>Intel Core I9</value>
+    </parameter>
+
+    <parameter name="SSD">
+        <value baseChoice="true">128GB</value>
+        <value>256GB</value>
+        <value>512GB</value>
+        <value>1TB</value>
+        <value valid="false">-20GB</value>
+    </parameter>
+
+    <parameter name="Backlit Keyboard">
+        <value baseChoice="true">true</value>
+        <value>false</value>
+    </parameter>
+
+    <relations strength="2">
+        <value>Manufacturer</value>
+        <value>RAM</value>
+        <value>Screen</value>
+        <value>Processor</value>
+        <value>SSD</value>
+    </relations>
+
+    <constraints param1="Manufacturer" param2="Screen">
+        <text>Manufacturer = "Apple" => Screen != 14</text>
+    </constraints>
+
+    <constraints param1="Manufacturer" param2="RAM">
+        <text>Manufacturer = "Apple" => RAM > 16</text>
+    </constraints>
+
+    <constraints param1="Manufacturer" param2="Processor">
+        <text>Manufacturer = "Apple" => (Processor != "AMD Ryzen 3" &amp;&amp; Processor != "AMD Ryzen 5" &amp;&amp; Processor != "AMD Ryzen 7" &amp;&amp; Processor != "Intel Core I3")</text>
+    </constraints>
+</rules>

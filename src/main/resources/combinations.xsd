@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="rules" type="rulesType"/>
+  <xs:complexType name="parameterType">
+    <xs:sequence>
+      <xs:element name="value" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute type="xs:boolean" name="valid" default="true"/>
+              <xs:attribute type="xs:boolean" name="baseChoice" default="false"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="relationsType">
+    <xs:sequence>
+      <xs:element name="value" maxOccurs="unbounded" minOccurs="0">
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute type="xs:integer" name="strength" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="constraintsType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="text">
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="param1" use="required"/>
+    <xs:attribute type="xs:string" name="param2" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="rulesType">
+    <xs:sequence>
+      <xs:element type="parameterType" name="parameter" maxOccurs="unbounded" minOccurs="2"/>
+      <xs:element type="relationsType" name="relations" maxOccurs="unbounded" />
+      <xs:element type="constraintsType" name="constraints" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
