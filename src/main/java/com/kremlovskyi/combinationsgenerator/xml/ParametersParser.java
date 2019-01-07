@@ -11,14 +11,12 @@ import java.util.List;
 
 public class ParametersParser {
 
-   private static final String FILE_WITH_PARAMETERS_BASE = "./src/main/resources/%s.xml";
    private Document document;
 
-   public ParametersParser(String parametersFileName) {
+   public ParametersParser(File parametersFile) {
       try {
          SAXBuilder saxBuilder = new SAXBuilder();
-         File inputFile = new File(createParametersFilePath(parametersFileName));
-         document = saxBuilder.build(inputFile);
+         document = saxBuilder.build(parametersFile);
       } catch (JDOMException | IOException e) {
          e.printStackTrace();
       }
@@ -26,9 +24,5 @@ public class ParametersParser {
 
    List<Element> parse(String childName) {
       return document.getRootElement().getChildren(childName);
-   }
-
-   private String createParametersFilePath(String combinationsFileName) {
-      return String.format(FILE_WITH_PARAMETERS_BASE, combinationsFileName);
    }
 }

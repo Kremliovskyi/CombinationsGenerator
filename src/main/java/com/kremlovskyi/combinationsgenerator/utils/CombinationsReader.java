@@ -53,7 +53,7 @@ public class CombinationsReader {
 
     private void prepareCSVParser() {
         try {
-            csvParser = new CSVParser(new FileReader(generator.getPathToOutPutFile()),
+            csvParser = new CSVParser(new FileReader(generator.getOutPutFile()),
                   CSVFormat.DEFAULT
                         .withCommentMarker('#')
                         .withFirstRecordAsHeader());

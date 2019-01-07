@@ -17,7 +17,7 @@ public class testCombinationsGenerator {
 
    @BeforeClass
    public void setUp() {
-      generator = new CombinationsGenerator("combinations-ipog");
+      generator = new CombinationsGenerator("combinations/combinations-ipog.xml");
       generator.createFileWithCombinations();
    }
 

@@ -4,11 +4,14 @@ import com.kremlovskyi.combinationsgenerator.xml.*;
 import edu.uta.cse.fireeye.common.*;
 import edu.uta.cse.fireeye.service.engine.BaseChoice;
 import edu.uta.cse.fireeye.service.engine.IpoEngine;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,11 +23,10 @@ import static com.kremlovskyi.combinationsgenerator.xml.Parameters.BASE_CHOICE_A
 import static com.kremlovskyi.combinationsgenerator.xml.Parameters.VALID_ATTRIBUTE_NAME;
 
 public class CombinationsGenerator {
-
-   private static final String OUTPUT_FILE_NAME_BASE = "./src/main/resources/%s-output.txt";
+   private static final String OUTPUT_FILE_NAME_BASE = "%s-output.txt";
    private static final Logger LOG = LogManager.getLogger(CombinationsGenerator.class);
    private static final String SUT_NAME = "TCAS";
-   private String pathToOutPutFile;
+   private File outPutFile;
    private SUT sut = new SUT(SUT_NAME);
    private AbstractElement parser;
    private ParametersParser parametersParser;
@@ -32,20 +34,27 @@ public class CombinationsGenerator {
    private AtomicBoolean isBaseChoice = new AtomicBoolean();
    private int positiveBaseChoiceValuesCount = 0;
 
-   public CombinationsGenerator(String parametersFileName) {
-      parametersParser = new ParametersParser(parametersFileName);
-      createOutPutFileName(parametersFileName);
+   public CombinationsGenerator(String parametersFilepath) {
+      File parametersFile;
+      URL url = getClass().getClassLoader().getResource(parametersFilepath);
+      if (url == null) {
+         throw new BuildError("File with rules is not found.");
+      }
+      parametersFile = new File(url.getPath());
+      parametersParser = new ParametersParser(parametersFile);
+      createOutPutFileName(parametersFile);
    }
 
-   private void createOutPutFileName(String parametersFileName) {
-      pathToOutPutFile = String.format(OUTPUT_FILE_NAME_BASE, parametersFileName);
+   private void createOutPutFileName(File parametersFile) {
+      outPutFile = new File(parametersFile.getParent(), String.format(OUTPUT_FILE_NAME_BASE,
+            FilenameUtils.removeExtension(parametersFile.getName())));
    }
 
    /**
     * @return path to the file with combinations.
     */
-   public String getPathToOutPutFile() {
-      return pathToOutPutFile;
+   public File getOutPutFile() {
+      return outPutFile;
    }
 
    /**
@@ -76,7 +85,7 @@ public class CombinationsGenerator {
       LOG.info(algorithmName + " algorithm is used");
       // print out the test set
       TestSetWrapper wrapper = new TestSetWrapper(ts, sut);
-      wrapper.outputInCSVFormat(pathToOutPutFile);
+      wrapper.outputInCSVFormat(outPutFile.getPath());
       LOG.info("File with combinations is created");
    }
 
