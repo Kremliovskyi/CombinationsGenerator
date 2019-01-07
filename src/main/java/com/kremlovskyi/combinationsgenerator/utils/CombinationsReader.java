@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class TCParametersReader {
+public class CombinationsReader {
 
-    private static final Logger LOG = LogManager.getLogger(TCParametersReader.class);
+    private static final Logger LOG = LogManager.getLogger(CombinationsReader.class);
     private CSVParser csvParser;
     private CombinationsGenerator generator;
 
-    public TCParametersReader(CombinationsGenerator generator) {
+    public CombinationsReader(CombinationsGenerator generator) {
         this.generator = generator;
         prepareCSVParser();
     }

@@ -1,7 +1,7 @@
 package example;
 
 import com.kremlovskyi.combinationsgenerator.CombinationsGenerator;
-import com.kremlovskyi.combinationsgenerator.utils.TCParametersReader;
+import com.kremlovskyi.combinationsgenerator.utils.CombinationsReader;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -29,7 +29,7 @@ public class testCombinationsGenerator {
 
    @DataProvider
    public Iterator<Object[]> dataProvider(){
-      TCParametersReader TCParametersReader = new TCParametersReader(generator);
-      return TCParametersReader.getAllRecordsIterator();
+      CombinationsReader reader = new CombinationsReader(generator);
+      return reader.getAllRecordsIterator();
    }
 }
