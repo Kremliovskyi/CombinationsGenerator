@@ -6,7 +6,7 @@
 
     <groupId>com.kremlovskyi.combinationsgenerator</groupId>
     <artifactId>combinationsgenerator</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <build>
         <plugins>
             <plugin>
@@ -16,6 +16,17 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
             <plugin>
@@ -58,17 +69,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
@@ -83,21 +83,6 @@
         </license>
     </licenses>
 
-    <scm>
-        <connection>scm:git:git://github.com/Kremliovskyi/CombinationsGenerator.git</connection>
-        <developerConnection>scm:git:ssh://github.com:Kremliovskyi/CombinationsGenerator.git</developerConnection>
-        <url>https://github.com/Kremliovskyi/CombinationsGenerator</url>
-    </scm>
-
-    <developers>
-        <developer>
-            <name>Andrii Kremlovskyi</name>
-            <email>kremliovskyi@hotmail.com</email>
-            <organization>com.github.kremlovskyi</organization>
-            <organizationUrl>https://github.com/Kremliovskyi/CombinationsGenerator</organizationUrl>
-        </developer>
-    </developers>
-
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
@@ -108,6 +93,21 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
+
+    <developers>
+        <developer>
+            <name>Andrii Kremlovskyi</name>
+            <email>kremliovskyi@hotmail.com</email>
+            <organization>com.github.kremliovskyi</organization>
+            <organizationUrl>https://github.com/Kremliovskyi/CombinationsGenerator</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/Kremliovskyi/CombinationsGenerator.git</connection>
+        <developerConnection>scm:git:ssh://github.com:Kremliovskyi/CombinationsGenerator.git</developerConnection>
+        <url>https://github.com/Kremliovskyi/CombinationsGenerator</url>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
