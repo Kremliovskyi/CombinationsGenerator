@@ -17,6 +17,8 @@ import java.util.List;
 public class CombinationsReader {
 
     private static final Logger LOG = LogManager.getLogger(CombinationsReader.class);
+    private static final int IS_VALID = 1;
+    private static final int IS_INVALID = 2;
     private CSVParser csvParser;
     private CombinationsGenerator generator;
 
@@ -49,12 +51,28 @@ public class CombinationsReader {
      * @return {@link Iterator} with negative combinations for TestNG data provider.
      */
     public Iterator<Object[]> getNegativeRecordsIterator() {
+        return getPositiveOrNegativeIterator(IS_INVALID);
+    }
+
+    /**
+     * @return {@link Iterator} with positive combinations for TestNG data provider.
+     */
+    public Iterator<Object[]> getPositiveRecordsIterator() {
+        return getPositiveOrNegativeIterator(IS_VALID);
+    }
+
+    /**
+     * @param flag one of the constants {@link CombinationsReader#IS_INVALID}
+     *                   or {@link CombinationsReader#IS_VALID}
+     * @return negative or positive iterator respectively to the passed value.
+     */
+    private Iterator<Object[]> getPositiveOrNegativeIterator(int flag) {
         List<Object[]> result = new ArrayList<>();
         List<Parameter> invalidValues = generator.getParametersWithInvalidValues();
         try {
             getCsvParser().getRecords().forEach(record -> {
-                boolean hasInvalidValue = isInvalidValueInside(invalidValues, record);
-                if (hasInvalidValue) {
+                int invalidValueInside = isInvalidValueInside(invalidValues, record);
+                if ((invalidValueInside & flag) > 0) {
                     parseRecord(result, record);
                 }
             });
@@ -73,13 +91,13 @@ public class CombinationsReader {
         result.add(values.toArray());
     }
 
-    private boolean isInvalidValueInside(List<Parameter> invalidValues, CSVRecord record) {
+    private int isInvalidValueInside(List<Parameter> invalidValues, CSVRecord record) {
         return record.toMap().entrySet().stream().anyMatch(e -> invalidValues.stream().anyMatch(parameter -> {
             if (parameter.getName().equals(e.getKey())) {
                 return parameter.getInvalidValues().contains(e.getValue());
             }
             return false;
-        }));
+        })) ? IS_INVALID : IS_VALID;
     }
 
     private void prepareCSVParser() {
