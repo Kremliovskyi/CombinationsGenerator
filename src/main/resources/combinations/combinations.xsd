@@ -19,7 +19,7 @@
   </xs:complexType>
   <xs:complexType name="relationsType">
     <xs:sequence>
-      <xs:element name="value" maxOccurs="unbounded" minOccurs="0">
+      <xs:element name="param" maxOccurs="unbounded" minOccurs="0">
       </xs:element>
     </xs:sequence>
     <xs:attribute type="xs:integer" name="strength" use="required"/>

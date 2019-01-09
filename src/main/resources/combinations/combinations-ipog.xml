@@ -49,11 +49,11 @@
     </parameter>
 
     <relations strength="2">
-        <value>Manufacturer</value>
-        <value>RAM</value>
-        <value>Screen</value>
-        <value>Processor</value>
-        <value>SSD</value>
+        <param>Manufacturer</param>
+        <param>RAM</param>
+        <param>Screen</param>
+        <param>Processor</param>
+        <param>SSD</param>
     </relations>
 
     <constraints param1="Manufacturer" param2="Screen">

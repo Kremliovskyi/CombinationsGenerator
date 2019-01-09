@@ -2,7 +2,6 @@ package example;
 
 import com.kremlovskyi.combinationsgenerator.CombinationsGenerator;
 import com.kremlovskyi.combinationsgenerator.utils.CombinationsReader;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -13,14 +12,6 @@ import java.util.Iterator;
  */
 public class testCombinationsGenerator {
 
-   private CombinationsGenerator generator;
-
-   @BeforeClass
-   public void setUp() {
-      generator = new CombinationsGenerator("combinations/combinations-ipog.xml");
-      generator.createFileWithCombinations();
-   }
-
    @Test(dataProvider = "dataProvider")
    public void Name(String manufacturer, int ram, int screen, String processor, String SSD, boolean backlit) {
       System.out.println("Manufacturer: "+ manufacturer + ", RAM: "+ ram + ", Screen: " +
@@ -29,6 +20,8 @@ public class testCombinationsGenerator {
 
    @DataProvider
    public Iterator<Object[]> dataProvider(){
+      CombinationsGenerator generator = new CombinationsGenerator("combinations/combinations-ipog.xml");
+      generator.createFileWithCombinations();
       CombinationsReader reader = new CombinationsReader(generator);
       return reader.getAllRecordsIterator();
    }

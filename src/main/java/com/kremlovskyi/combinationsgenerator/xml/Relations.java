@@ -22,6 +22,6 @@ public class Relations extends AbstractElement {
 
    @Override
    public String getValueName() {
-      return "value";
+      return "param";
    }
 }
