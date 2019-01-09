@@ -33,6 +33,7 @@ public class CombinationsGenerator {
    private List<Parameter> parameterList = new ArrayList<>();
    private AtomicBoolean isBaseChoice = new AtomicBoolean();
    private int positiveBaseChoiceValuesCount = 0;
+   private ArrayList<Parameter> parametersWithInvalidValues = new ArrayList<>();
 
    public CombinationsGenerator(String parametersFilepath) {
       File parametersFile;
@@ -144,12 +145,19 @@ public class CombinationsGenerator {
          parameter.setBaseChoiceValues(new ArrayList<>(positiveBaseChoiceValues));
          positiveBaseChoiceValues.clear();
       }
+      if (!parameter.getInvalidValues().isEmpty()) {
+         parametersWithInvalidValues.add(parameter);
+      }
    }
 
    private void verifyEachParameterHasBaseChoiceValue() {
       if (positiveBaseChoiceValuesCount > 0 && parameterList.size() != positiveBaseChoiceValuesCount) {
          throw new BuildError("Not all parameters has base choice values!");
       }
+   }
+
+   public ArrayList<Parameter> getParametersWithInvalidValues() {
+      return parametersWithInvalidValues;
    }
 
    private void processValuesType(List<Element> children, Parameter parameter) {

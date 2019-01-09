@@ -4,6 +4,7 @@ import com.kremlovskyi.combinationsgenerator.CombinationsGenerator;
 import edu.uta.cse.fireeye.common.Parameter;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,30 +26,60 @@ public class CombinationsReader {
     }
 
     /**
-     * @return {@link CSVParser} over the elements in the file with combinations.
+     * @return {@link CSVParser} over the records in the file with combinations.
      */
     public CSVParser getCsvParser() {
         return csvParser;
     }
 
     /**
-     * @return {@link Iterator} with data for TestNG data provider.
+     * @return {@link Iterator} with all combinations for TestNG data provider.
      */
     public Iterator<Object[]> getAllRecordsIterator() {
         List<Object[]> result = new ArrayList<>();
         try {
+            getCsvParser().getRecords().forEach(record -> parseRecord(result, record));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result.iterator();
+    }
+
+    /**
+     * @return {@link Iterator} with negative combinations for TestNG data provider.
+     */
+    public Iterator<Object[]> getNegativeRecordsIterator() {
+        List<Object[]> result = new ArrayList<>();
+        List<Parameter> invalidValues = generator.getParametersWithInvalidValues();
+        try {
             getCsvParser().getRecords().forEach(record -> {
-                Iterator<String> iterator = record.iterator();
-                List<Object> values = new ArrayList<>();
-                while (iterator.hasNext()){
-                    values.add(convertValue(iterator.next()));
+                boolean hasInvalidValue = isInvalidValueInside(invalidValues, record);
+                if (hasInvalidValue) {
+                    parseRecord(result, record);
                 }
-                result.add(values.toArray());
             });
         } catch (IOException e) {
             e.printStackTrace();
         }
         return result.iterator();
+    }
+
+    private void parseRecord(List<Object[]> result, CSVRecord record) {
+        Iterator<String> iterator = record.iterator();
+        List<Object> values = new ArrayList<>();
+        while (iterator.hasNext()){
+            values.add(convertValue(iterator.next()));
+        }
+        result.add(values.toArray());
+    }
+
+    private boolean isInvalidValueInside(List<Parameter> invalidValues, CSVRecord record) {
+        return record.toMap().entrySet().stream().anyMatch(e -> invalidValues.stream().anyMatch(parameter -> {
+            if (parameter.getName().equals(e.getKey())) {
+                return parameter.getInvalidValues().contains(e.getValue());
+            }
+            return false;
+        }));
     }
 
     private void prepareCSVParser() {
@@ -76,5 +107,4 @@ public class CombinationsReader {
         }
         return result;
     }
-
 }
