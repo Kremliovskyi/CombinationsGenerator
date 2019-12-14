@@ -128,11 +128,11 @@ public class CombinationsGenerator {
          String value = childElement.getValue();
          Attribute validAttribute = childElement.getAttribute(VALID_ATTRIBUTE_NAME);
          Attribute baseChoiceAttribute = childElement.getAttribute(BASE_CHOICE_ATTRIBUTE_NAME);
-         if (baseChoiceAttribute != null && Boolean.valueOf(baseChoiceAttribute.getValue())) {
+         if (baseChoiceAttribute != null && Boolean.parseBoolean(baseChoiceAttribute.getValue())) {
             positiveBaseChoiceValues.add(value);
             positiveBaseChoiceValuesCount++;
          }
-         if (validAttribute != null && !Boolean.valueOf(validAttribute.getValue())) {
+         if (validAttribute != null && !Boolean.parseBoolean(validAttribute.getValue())) {
             parameter.addInvalidValue(value);
             LOG.info("Value of invalid parameter is: " + value);
          } else {

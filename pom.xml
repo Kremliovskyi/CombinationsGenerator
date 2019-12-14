@@ -153,17 +153,17 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.14.3</version>
+            <version>7.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
-            <version>1.6</version>
+            <version>1.7</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.8.1</version>
+            <version>3.9</version>
         </dependency>
         <dependency>
             <groupId>org.jdom</groupId>
@@ -188,9 +188,9 @@
         <dependency>
             <groupId>edu.uta.cse.fireeye.acts</groupId>
             <artifactId>acts</artifactId>
-            <version>3.0</version>
+            <version>3.2</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/src/libs/acts_3.0.jar</systemPath>
+            <systemPath>${project.basedir}/src/libs/acts_3.2.jar</systemPath>
         </dependency>
     </dependencies>
 
